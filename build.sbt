@@ -1,10 +1,17 @@
+import scala.scalanative.build.Mode
+
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-lazy val native =
-  project
-    .in(file("native"))
-    .enablePlugins(ScalaNativePlugin)
-    .settings(common)
+val V = new {
+  val Scala = "3.1.2"
+}
+
+lazy val exampleBackend =
+  projectMatrix
+    .in(file("example-backend"))
+    .nativePlatform(Seq(V.Scala))
+    .dependsOn(neutrino)
+    .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala), VirtualAxis.native)
     .settings(
       nativeConfig := {
         val conf = nativeConfig.value
@@ -20,13 +27,14 @@ lazy val native =
           .withEmbedResources(true)
       },
       Compile / resourceGenerators += Def.task {
-        val jsLinked = (js / Compile / fastLinkJS).value
+        val jsLinked = (exampleJS / Compile / fastLinkJS).value
         val path =
-          (js / Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
+          (exampleJS / Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
+
         val file = path / "main.js"
 
         val dest =
-          (Compile / unmanagedResourceDirectories).value.head / "app.js"
+          (Compile / managedResourceDirectories).value.head / "app.js"
 
         IO.copyFile(file, dest)
 
@@ -34,14 +42,23 @@ lazy val native =
       }
     )
 
-lazy val js =
-  project
-    .in(file("js"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(common)
+lazy val exampleFrontend =
+  projectMatrix
+    .in(file("example-frontend"))
+    .dependsOn(neutrino)
+    .jsPlatform(Seq(V.Scala))
+    .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala), VirtualAxis.js)
     .settings(scalaJSUseMainModuleInitializer := true)
     .settings(libraryDependencies += "com.raquo" %%% "laminar" % "0.14.2")
 
-val common = Seq(
-  scalaVersion := "3.1.2"
-)
+lazy val exampleJS = exampleFrontend.js(V.Scala)
+
+lazy val neutrino =
+  projectMatrix
+    .in(file("neutrino"))
+    .jsPlatform(Seq(V.Scala))
+    .nativePlatform(Seq(V.Scala))
+    .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala))
+    .settings(
+      libraryDependencies += "com.lihaoyi" %%% "upickle" % "2.0.0"
+    )

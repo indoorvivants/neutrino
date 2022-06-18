@@ -1,4 +1,4 @@
-package webview
+package neutrino.webview
 
 import scala.scalanative.unsafe.*
 import scala.scalanative.unsigned.*
