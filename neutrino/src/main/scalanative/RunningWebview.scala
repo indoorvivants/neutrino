@@ -6,7 +6,12 @@ import scala.io.Source
 import scala.scalanative.unsafe.Zone
 import neutrino.ipc.Context
 
-class RunningWebview(val w: webview_t, var width: Int, var height: Int, val z: Zone):
+class RunningWebview(
+    val w: webview_t,
+    var width: Int,
+    var height: Int,
+    val z: Zone
+):
   import scalanative.unsafe.*
   import ipc.*
   import scala.util.*
@@ -20,7 +25,7 @@ class RunningWebview(val w: webview_t, var width: Int, var height: Int, val z: Z
     !ptr = (this, handler)
     val func =
       funcName match
-        case s: String  => toCString(s)(using z)
+        case s: String => toCString(s)(using z)
 
     webview_bind(
       w,

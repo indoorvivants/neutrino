@@ -11,4 +11,3 @@ import scala.util.*
 
 case class Context[T](cmd: T, view: RunningWebview, promise: CString => Unit)
 type stored[T] = Tuple2[RunningWebview, Context[T] => Unit]
-
