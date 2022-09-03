@@ -12,8 +12,7 @@ import neutrino.*
     .getLines()
     .mkString("\n")
 
-  WebviewApp.builder
-    .withDebugOn
+  WebviewApp.builder.withDebugOn
     .withHtml(
       Html(
         """
