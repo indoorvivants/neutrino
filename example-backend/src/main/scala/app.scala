@@ -27,7 +27,6 @@ import neutrino.*
             <title>Document</title>
           </head>
           <body>
-            <b>what</b>
             <div id = "appContainer" />
           </body>
         </html>
