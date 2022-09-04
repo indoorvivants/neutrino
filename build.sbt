@@ -3,7 +3,10 @@ import scala.scalanative.build.Mode
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val V = new {
-  val Scala = "3.1.2"
+  val Scala = "3.2.0"
+
+  val Laminar = "0.14.2"
+  val upickle = "2.0.0"
 }
 
 lazy val exampleBackend =
@@ -49,7 +52,7 @@ lazy val exampleFrontend =
     .jsPlatform(Seq(V.Scala))
     .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala), VirtualAxis.js)
     .settings(scalaJSUseMainModuleInitializer := true)
-    .settings(libraryDependencies += "com.raquo" %%% "laminar" % "0.14.2")
+    .settings(libraryDependencies += "com.raquo" %%% "laminar" % V.Laminar)
 
 lazy val exampleJS = exampleFrontend.js(V.Scala)
 
@@ -60,5 +63,5 @@ lazy val neutrino =
     .nativePlatform(Seq(V.Scala))
     .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala))
     .settings(
-      libraryDependencies += "com.lihaoyi" %%% "upickle" % "2.0.0"
+      libraryDependencies += "com.lihaoyi" %%% "upickle" % V.upickle
     )
