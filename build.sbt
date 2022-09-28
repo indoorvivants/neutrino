@@ -49,7 +49,7 @@ lazy val exampleFrontend =
     .jsPlatform(Seq(V.Scala))
     .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala), VirtualAxis.js)
     .settings(scalaJSUseMainModuleInitializer := true)
-    .settings(libraryDependencies += "com.raquo" %%% "laminar" % "0.14.2")
+    .settings(libraryDependencies += "com.raquo" %%% "laminar" % "0.14.5")
 
 lazy val exampleJS = exampleFrontend.js(V.Scala)
 
