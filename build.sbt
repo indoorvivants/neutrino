@@ -3,7 +3,7 @@ import scala.scalanative.build.Mode
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 val V = new {
-  val Scala = "3.1.2"
+  val Scala = "3.2.2"
 }
 
 lazy val exampleBackend =
