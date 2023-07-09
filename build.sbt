@@ -60,5 +60,5 @@ lazy val neutrino =
     .nativePlatform(Seq(V.Scala))
     .defaultAxes(VirtualAxis.scalaABIVersion(V.Scala))
     .settings(
-      libraryDependencies += "com.lihaoyi" %%% "upickle" % "2.0.0"
+      libraryDependencies += "com.lihaoyi" %%% "upickle" % "3.1.1"
     )
